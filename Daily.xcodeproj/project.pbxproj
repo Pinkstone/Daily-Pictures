@@ -26,6 +26,8 @@
 		D2467996187B616C00853B63 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D246796E187B616C00853B63 /* CoreData.framework */; };
 		D246799E187B616C00853B63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D246799C187B616C00853B63 /* InfoPlist.strings */; };
 		D24679A0187B616C00853B63 /* DailyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D246799F187B616C00853B63 /* DailyTests.m */; };
+		D24679B4187B62E100853B63 /* DailyValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D24679B3187B62E100853B63 /* DailyValueTransformer.m */; };
+		D24679B7187B636D00853B63 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = D24679B6187B636D00853B63 /* Event.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,8 +52,6 @@
 		D2467978187B616C00853B63 /* Daily-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Daily-Prefix.pch"; sourceTree = "<group>"; };
 		D2467979187B616C00853B63 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D246797A187B616C00853B63 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D246797D187B616C00853B63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		D2467980187B616C00853B63 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		D2467983187B616C00853B63 /* Daily.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Daily.xcdatamodel; sourceTree = "<group>"; };
 		D2467985187B616C00853B63 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
 		D2467986187B616C00853B63 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
@@ -63,6 +63,12 @@
 		D246799B187B616C00853B63 /* DailyTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DailyTests-Info.plist"; sourceTree = "<group>"; };
 		D246799D187B616C00853B63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D246799F187B616C00853B63 /* DailyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DailyTests.m; sourceTree = "<group>"; };
+		D24679AB187B618D00853B63 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		D24679AE187B619A00853B63 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		D24679B2187B62E100853B63 /* DailyValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DailyValueTransformer.h; sourceTree = "<group>"; };
+		D24679B3187B62E100853B63 /* DailyValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DailyValueTransformer.m; sourceTree = "<group>"; };
+		D24679B5187B636D00853B63 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		D24679B6187B636D00853B63 /* Event.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +140,11 @@
 				D2467988187B616C00853B63 /* DetailViewController.h */,
 				D2467989187B616C00853B63 /* DetailViewController.m */,
 				D246798B187B616C00853B63 /* Images.xcassets */,
+				D24679B5187B636D00853B63 /* Event.h */,
+				D24679B6187B636D00853B63 /* Event.m */,
 				D2467982187B616C00853B63 /* Daily.xcdatamodeld */,
+				D24679B2187B62E100853B63 /* DailyValueTransformer.h */,
+				D24679B3187B62E100853B63 /* DailyValueTransformer.m */,
 				D2467971187B616C00853B63 /* Supporting Files */,
 			);
 			path = Daily;
@@ -267,11 +277,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D24679B4187B62E100853B63 /* DailyValueTransformer.m in Sources */,
 				D246798A187B616C00853B63 /* DetailViewController.m in Sources */,
 				D2467987187B616C00853B63 /* MasterViewController.m in Sources */,
 				D246797B187B616C00853B63 /* AppDelegate.m in Sources */,
 				D2467984187B616C00853B63 /* Daily.xcdatamodeld in Sources */,
 				D2467977187B616C00853B63 /* main.m in Sources */,
+				D24679B7187B636D00853B63 /* Event.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +317,7 @@
 		D246797C187B616C00853B63 /* Main_iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D246797D187B616C00853B63 /* Base */,
+				D24679AB187B618D00853B63 /* en */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -313,7 +325,7 @@
 		D246797F187B616C00853B63 /* Main_iPad.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D2467980187B616C00853B63 /* Base */,
+				D24679AE187B619A00853B63 /* en */,
 			);
 			name = Main_iPad.storyboard;
 			sourceTree = "<group>";
@@ -362,7 +374,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -396,7 +408,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -411,6 +423,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Daily/Daily-Prefix.pch";
 				INFOPLIST_FILE = "Daily/Daily-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -424,6 +437,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Daily/Daily-Prefix.pch";
 				INFOPLIST_FILE = "Daily/Daily-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
