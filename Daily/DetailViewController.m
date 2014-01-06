@@ -7,10 +7,17 @@
 //
 
 #import "DetailViewController.h"
+#import "Event.h"
 
 @interface DetailViewController ()
+
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIButton *uploadButton;
+
 - (void)configureView;
+- (IBAction)uploadImage:(id)sender;
+
 @end
 
 @implementation DetailViewController
@@ -36,7 +43,19 @@
     // Update the user interface for the detail item.
 
     if (self.detailItem) {
-        self.detailDescriptionLabel.text = [[self.detailItem valueForKey:@"timeStamp"] description];
+        
+        Event *currentEvent = self.detailItem;
+        
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        formatter.timeStyle = NSDateFormatterNoStyle;
+        formatter.dateStyle = NSDateFormatterMediumStyle;
+        
+        self.title = [formatter stringFromDate:currentEvent.timeStamp];
+        
+        if (currentEvent.picture) {
+            self.imageView.image = [UIImage imageWithData:currentEvent.picture];
+            [self.uploadButton setTitle:nil forState:UIControlStateNormal];
+        }
     }
 }
 
@@ -51,6 +70,32 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark - Image Picker
+
+- (IBAction)uploadImage:(id)sender {
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc]init];
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePicker.allowsEditing = NO;
+    imagePicker.delegate = self;
+    
+    [self presentModalViewController:imagePicker animated:YES];
+    
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    [self dismissModalViewControllerAnimated:YES];
+    UIImage *chosenImage = [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.imageView.image = chosenImage;
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 #pragma mark - Split view
