@@ -78,6 +78,31 @@
     NSString *picturesLeft = [NSString stringWithFormat:@"%ld", (long)daysLeft];
     self.picturesLeftLabel.text = picturesLeft;
     
+    // log file size
+    NSPersistentStore *store = [[self.fetchedResultsController.managedObjectContext.persistentStoreCoordinator persistentStores]objectAtIndex:0];
+    NSURL *cloudLog = [[store options]objectForKey:NSPersistentStoreUbiquitousContentURLKey];
+    NSString *cloudLogFilename = [[store options]objectForKey:NSPersistentStoreUbiquitousContentNameKey];
+    cloudLog = [cloudLog URLByAppendingPathComponent:cloudLogFilename];
+    NSString *cloudLogPath = [cloudLog path];
+    
+    unsigned long long logFileSize = [[[NSFileManager defaultManager]attributesOfItemAtPath:cloudLogPath error:NULL]fileSize];
+    NSString *logSize = [NSString stringWithFormat:@"%llu", logFileSize];
+    
+    self.logFileSizeLabel.text = logSize;
+    
+    // store size / Core Data usage
+    NSString *storePath = [store.URL path];
+    unsigned long long storeSize = [[[NSFileManager defaultManager]attributesOfItemAtPath:storePath error:nil]fileSize];
+    NSString *storeSizeLabel = [NSString stringWithFormat:@"%llu", storeSize];
+    
+    if (floor(NSFoundationVersionNumber) >= NSFoundationVersionNumber_iOS_6_0) {
+        // format the result
+        NSByteCountFormatter *formatter = [[NSByteCountFormatter alloc]init];
+        storeSizeLabel = [formatter stringFromByteCount:storeSize];
+    }
+
+    self.iCloudSizeLabel.text = storeSizeLabel;
+    
 }
 
 - (IBAction)dismissButton:(id)sender {
