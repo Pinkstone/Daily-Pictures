@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *uploadButton;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 
 - (void)configureView;
 - (IBAction)uploadImage:(id)sender;

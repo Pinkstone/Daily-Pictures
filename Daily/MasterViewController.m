@@ -155,6 +155,10 @@
         Event *event = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         [segue.destinationViewController setDetailEvent:event];
     }
+    
+    if ([segue.identifier isEqualToString:@"showStats"]) {
+        [segue.destinationViewController setFetchedResultsController:self.fetchedResultsController];
+    }
 }
 
 #pragma mark - Fetched results controller

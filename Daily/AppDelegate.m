@@ -86,6 +86,38 @@
     
     NSLog(@"iCloud reports that Core Data changes have just appeared. Merging changes.");
     [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+    
+    /*
+    
+    // as a refresh test: remove store from coordinator, then add it again
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Daily.sqlite"];
+    NSURL *cloudURL = [self grabCloudURL];
+    NSError *error = nil;
+    
+    NSPersistentStore *currentStore = [self.persistentStoreCoordinator persistentStoreForURL:storeURL];
+    
+    if (![self.persistentStoreCoordinator removePersistentStore:currentStore error:&error]) {
+        // Houston, we have a problem:
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Refreshing didn't work so well...");
+    } else {
+        
+        NSLog(@"Current Store removed successfully.");
+    }
+    
+    if (![self.persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:@{NSPersistentStoreUbiquitousContentNameKey: @"DailyCloudStore", NSPersistentStoreUbiquitousContentURLKey: cloudURL} error:&error]) {
+        
+        // Houston, we have a problem:
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Refreshing didn't work so well...");
+    } else {
+        
+        NSLog(@"Store added again with grace and success.");
+    }
+     */
+    
+    // save context
+    [self saveContext];
 }
 
 #pragma mark - Core Data stack

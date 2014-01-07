@@ -11,6 +11,7 @@
 @interface EditDateViewController ()
 
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) IBOutlet UITextView *titleTextfield;
 
 - (IBAction)changeDate:(id)sender;
 
