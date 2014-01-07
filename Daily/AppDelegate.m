@@ -32,6 +32,10 @@
         MasterViewController *controller = (MasterViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
     }
+    
+    // observe iCloud changes
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(dataChanged:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    
     return YES;
 }
 							
@@ -78,6 +82,12 @@
     }
 }
 
+- (void)dataChanged:(NSNotification *)notification {
+    
+    NSLog(@"iCloud reports that Core Data changes have just appeared. Merging changes.");
+    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+}
+
 #pragma mark - Core Data stack
 
 // Returns the managed object context for the application.
@@ -117,10 +127,11 @@
     }
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Daily.sqlite"];
+    NSURL *cloudURL = [self grabCloudURL];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:@{NSPersistentStoreUbiquitousContentNameKey: @"DailyCloudStore", NSPersistentStoreUbiquitousContentURLKey: cloudURL} error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -159,6 +170,17 @@
 - (NSURL *)applicationDocumentsDirectory
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (NSURL *)grabCloudURL {
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *teamID = @"F34HMY85N9";
+    NSString *bundleID = [[NSBundle mainBundle]bundleIdentifier];
+    NSString *cloudRoot = [NSString stringWithFormat:@"%@.%@", teamID, bundleID];
+    NSURL *cloudRootURL = [fileManager URLForUbiquityContainerIdentifier:cloudRoot];
+    
+    return cloudRootURL;
 }
 
 @end

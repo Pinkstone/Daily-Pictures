@@ -33,13 +33,37 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.managedObjectContext save:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)registerDailyNotification {
+    
+    // before we create any new ones, cancel all existing notifications
+    [[UIApplication sharedApplication]cancelAllLocalNotifications];
+	
+    // create a local notification
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    
+    // customise and schedule it
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:30];
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.repeatInterval = NSDayCalendarUnit;
+    notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.alertAction = @"Let's do this";
+    notification.alertBody = @"You haven't added a picture today. Would you like to do this now?";
+    
+    [[UIApplication sharedApplication]scheduleLocalNotification:notification];
+    
 }
 
 - (void)insertNewObject:(id)sender
@@ -120,6 +144,8 @@
         NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
         self.detailViewController.detailItem = object;
     }
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -152,10 +178,11 @@
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
+    [fetchRequest setReturnsObjectsAsFaults:NO];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -218,6 +245,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.tableView endUpdates];
+    [self.tableView reloadData];
 }
 
 /*
@@ -230,6 +258,7 @@
 }
  */
 
+
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
     Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -240,6 +269,12 @@
     
     cell.textLabel.text = [formatter stringFromDate:event.timeStamp];
     cell.imageView.image = [UIImage imageWithData:event.picture];
+}
+
+- (void)dataChanged:(NSNotification *)notification {
+    
+    NSLog(@"iCloud reports that Core Data changes have just appeared. Refreshing Fetched Results Controller.");
+    [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 }
 
 @end
