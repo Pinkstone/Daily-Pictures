@@ -8,6 +8,7 @@
 
 #import "DetailViewController.h"
 #import "Event.h"
+#import "EditDateViewController.h"
 
 @interface DetailViewController ()
 
@@ -55,13 +56,7 @@
 - (void)configureView
 {
     // Update the user interface for the detail item.
-    
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.timeStyle = NSDateFormatterNoStyle;
-    formatter.dateStyle = NSDateFormatterMediumStyle;
-    
-    self.title = [formatter stringFromDate:self.detailEvent.timeStamp];
-    
+    self.title = [self grabEventDate];
     self.imageView.image = [UIImage imageWithData:self.detailEvent.picture];
 }
 
@@ -77,10 +72,25 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    // update title with potential new date
+    self.title = [self grabEventDate];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     
     // back button pressed, let's tell our delegate
     [self.delegate detailViewDidSave:self.detailItem];
+}
+
+- (NSString *)grabEventDate {
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.timeStyle = NSDateFormatterNoStyle;
+    formatter.dateStyle = NSDateFormatterMediumStyle;
+    
+    return [formatter stringFromDate:self.detailEvent.timeStamp];
 }
 
 #pragma mark - Image Picker
@@ -125,6 +135,16 @@
     // Called when the view is shown again in the split view, invalidating the button and popover controller.
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     self.masterPopoverController = nil;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([segue.identifier isEqualToString:@"editDate"]) {
+        
+        EditDateViewController *controller = [[EditDateViewController alloc]init];
+        controller = segue.destinationViewController;
+        controller.editEvent = self.detailEvent;
+    }
 }
 
 @end
