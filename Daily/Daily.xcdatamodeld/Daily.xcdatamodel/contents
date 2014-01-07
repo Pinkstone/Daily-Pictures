@@ -3,7 +3,7 @@
     <entity name="Event" representedClassName="Event">
         <attribute name="geolocation" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="picture" optional="YES" attributeType="Transformable" valueTransformerName="DailyValueTransformer" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" valueTransformerName="DailyValueTransformer" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="timeStamp" optional="YES" attributeType="Date">
             <userInfo/>
         </attribute>

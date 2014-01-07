@@ -16,6 +16,6 @@
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSNumber * geolocation;
 @property (nonatomic, retain) NSString * notes;
-@property (nonatomic, retain) id picture;
+@property (nonatomic, retain) NSData * picture;
 
 @end

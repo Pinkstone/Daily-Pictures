@@ -7,9 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Event.h"
 
+@protocol DetailViewDelegate;
 @interface DetailViewController : UIViewController <UISplitViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (strong, nonatomic) id detailItem;
+@property (strong, nonatomic) Event *detailEvent;
+@property (weak) id <DetailViewDelegate> delegate;
+
+@end
+
+@protocol DetailViewDelegate
+
+- (void)detailViewDidSave:(Event *)event;
 
 @end

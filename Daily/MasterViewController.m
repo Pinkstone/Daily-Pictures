@@ -7,8 +7,7 @@
 //
 
 #import "MasterViewController.h"
-
-#import "DetailViewController.h"
+#import "Event.h"
 
 @interface MasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -29,11 +28,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    // self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,11 +46,10 @@
 {
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    Event *event = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    // configure the new managed object
+    event.timeStamp = [NSDate date];
     
     // Save the context.
     NSError *error = nil;
@@ -60,6 +59,11 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+}
+
+- (void)detailViewDidSave:(Event *)event {
+    
+    [self.managedObjectContext save:nil];
 }
 
 #pragma mark - Table View
@@ -122,8 +126,8 @@
 {
     if ([[segue identifier] isEqualToString:@"showDetail"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-        [[segue destinationViewController] setDetailItem:object];
+        Event *event = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+        [segue.destinationViewController setDetailEvent:event];
     }
 }
 
@@ -228,8 +232,14 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    Event *event = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.timeStyle = NSDateFormatterNoStyle;
+    formatter.dateStyle = NSDateFormatterLongStyle;
+    
+    cell.textLabel.text = [formatter stringFromDate:event.timeStamp];
+    cell.imageView.image = [UIImage imageWithData:event.picture];
 }
 
 @end

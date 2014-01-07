@@ -22,8 +22,8 @@
 
 - (id)transformedValue:(id)value {
     
-    // takes the UIImage into data and returns it
-    NSData *imageData = UIImagePNGRepresentation(value);
+    // turns the UIImage into data and returns it
+    NSData *imageData = UIImagePNGRepresentation((UIImage *)value);
     return imageData;
     
 }

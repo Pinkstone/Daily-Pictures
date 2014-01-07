@@ -38,31 +38,36 @@
     }        
 }
 
+- (void)setDetailEvent:(Event *)detailEvent {
+    
+    if (!_detailEvent) {
+        _detailEvent = detailEvent;
+        
+        // Update the view
+        [self configureView];
+    }
+    
+    if (self.masterPopoverController != nil) {
+        [self.masterPopoverController dismissPopoverAnimated:YES];
+    }
+}
+
 - (void)configureView
 {
     // Update the user interface for the detail item.
-
-    if (self.detailItem) {
-        
-        Event *currentEvent = self.detailItem;
-        
-        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-        formatter.timeStyle = NSDateFormatterNoStyle;
-        formatter.dateStyle = NSDateFormatterMediumStyle;
-        
-        self.title = [formatter stringFromDate:currentEvent.timeStamp];
-        
-        if (currentEvent.picture) {
-            self.imageView.image = [UIImage imageWithData:currentEvent.picture];
-            [self.uploadButton setTitle:nil forState:UIControlStateNormal];
-        }
-    }
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.timeStyle = NSDateFormatterNoStyle;
+    formatter.dateStyle = NSDateFormatterMediumStyle;
+    
+    self.title = [formatter stringFromDate:self.detailEvent.timeStamp];
+    
+    self.imageView.image = [UIImage imageWithData:self.detailEvent.picture];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
 
@@ -72,6 +77,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    // back button pressed, let's tell our delegate
+    [self.delegate detailViewDidSave:self.detailItem];
+}
 
 #pragma mark - Image Picker
 
@@ -91,6 +101,9 @@
     [self dismissModalViewControllerAnimated:YES];
     UIImage *chosenImage = [info objectForKey:UIImagePickerControllerOriginalImage];
     self.imageView.image = chosenImage;
+    
+    // add the image the current event
+    self.detailEvent.picture = UIImageJPEGRepresentation(chosenImage, 1);
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
