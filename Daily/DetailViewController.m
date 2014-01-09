@@ -72,6 +72,12 @@
         self.shareThisButton.hidden = NO;
         self.shareThisButton.enabled = YES;
     }
+    
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+        // no picture sharing for iOS 5 users...
+        self.shareThisButton.hidden = YES;
+        self.shareThisButton.enabled = NO;
+    }
 }
 
 - (void)viewDidLoad
@@ -133,7 +139,7 @@
 - (IBAction)shareThisPressed:(id)sender {
     
     // bring up a UIActivityViewController
-    NSArray *items = @[self.detailEvent.title, [UIImage imageWithData:self.detailEvent.picture]];
+    NSArray *items = @[[UIImage imageWithData:self.detailEvent.picture]];
     UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
     
     [self presentViewController:controller animated:YES completion:nil];
