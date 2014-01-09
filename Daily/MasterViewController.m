@@ -30,6 +30,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     // self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
+    // add button
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
     self.navigationItem.rightBarButtonItem = addButton;
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
@@ -83,10 +84,24 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+    
+    // push detail view for initial image upload
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:nil];
+    DetailViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"Detail"];
+    controller.detailEvent = event;
+    controller.delegate = self;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)detailViewDidSave:(Event *)event {
     
+    [self.managedObjectContext save:nil];
+}
+
+- (void)detailViewDelete:(Event *)event {
+    
+    NSLog(@"Deleting event");
+    [self.managedObjectContext deleteObject:event];
     [self.managedObjectContext save:nil];
 }
 
@@ -272,6 +287,7 @@
     formatter.dateStyle = NSDateFormatterLongStyle;
     
     cell.textLabel.text = [formatter stringFromDate:event.timeStamp];
+    cell.detailTextLabel.text = event.title;
     cell.imageView.image = [UIImage imageWithData:event.picture];
 }
 

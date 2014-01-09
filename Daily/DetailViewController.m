@@ -83,8 +83,17 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     
-    // back button pressed, let's tell our delegate
-    [self.delegate detailViewDidSave:self.detailItem];
+    if ([self.navigationController.viewControllers indexOfObject:self] == NSNotFound) {
+        
+        // back button pressed, let's tell our delegate
+        if (!self.detailEvent.picture) {
+            // delete the event because we dont' have a picture
+            [self.delegate detailViewDelete:self.detailEvent];
+        } else {
+            [self.delegate detailViewDidSave:self.detailItem];
+        }
+    }
+    [super viewWillDisappear:animated];
 }
 
 - (NSString *)grabEventDate {

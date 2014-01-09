@@ -21,5 +21,6 @@
 @protocol DetailViewDelegate
 
 - (void)detailViewDidSave:(Event *)event;
+- (void)detailViewDelete:(Event *)event;
 
 @end
