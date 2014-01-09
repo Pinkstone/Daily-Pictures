@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Event.h"
 
-@interface EditDateViewController : UIViewController
+@interface EditDateViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) Event *editEvent;
 

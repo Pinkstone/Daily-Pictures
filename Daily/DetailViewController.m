@@ -59,6 +59,7 @@
     // Update the user interface for the detail item.
     self.title = [self grabEventDate];
     self.imageView.image = [UIImage imageWithData:self.detailEvent.picture];
+    self.titleLabel.text = self.detailEvent.title;
 }
 
 - (void)viewDidLoad
@@ -77,6 +78,7 @@
     
     // update title with potential new date
     self.title = [self grabEventDate];
+    self.titleLabel.text = self.detailEvent.title;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

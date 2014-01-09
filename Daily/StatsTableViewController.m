@@ -99,6 +99,10 @@
         // format the result
         NSByteCountFormatter *formatter = [[NSByteCountFormatter alloc]init];
         storeSizeLabel = [formatter stringFromByteCount:storeSize];
+    } else {
+        // format the results the old fashioned way
+        storeSize = storeSize / 1024 / 1024;
+        storeSizeLabel = [NSString stringWithFormat:@"%llu MB", storeSize];
     }
 
     self.iCloudSizeLabel.text = storeSizeLabel;

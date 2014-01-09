@@ -159,11 +159,11 @@
     }
     
     NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Daily.sqlite"];
-    NSURL *cloudURL = [self grabCloudURL];
+    // NSURL *cloudURL = [self grabCloudURL];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:@{NSPersistentStoreUbiquitousContentNameKey: @"DailyCloudStore", NSPersistentStoreUbiquitousContentURLKey: cloudURL} error:&error]) {
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:@{NSSQLitePragmasOption:@{@"journal_mode": @"DELETE"}} error:&error]) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -189,6 +189,8 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         NSLog(@"We'll delete the store file now, please restart the app.");
+        // [[NSFileManager defaultManager]removeItemAtURL:cloudURL error:nil];
+        // [NSPersistentStoreCoordinator removeUbiquitousContentAndPersistentStoreAtURL:storeURL options:nil error:nil];
         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
         abort();
     }    

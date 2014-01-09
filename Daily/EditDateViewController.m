@@ -11,7 +11,8 @@
 @interface EditDateViewController ()
 
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
-@property (strong, nonatomic) IBOutlet UITextView *titleTextfield;
+@property (strong, nonatomic) IBOutlet UITextField *textField;
+
 
 - (IBAction)changeDate:(id)sender;
 
@@ -33,6 +34,7 @@
 {
     [super viewDidLoad];
     self.datePicker.date = self.editEvent.timeStamp;
+    self.textField.text = self.editEvent.title;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -51,4 +53,13 @@
     
     self.editEvent.timeStamp = self.datePicker.date;
 }
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [self.textField resignFirstResponder];
+    self.editEvent.title = self.textField.text;
+    
+    return YES;
+}
+
 @end
