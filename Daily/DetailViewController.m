@@ -16,9 +16,12 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIButton *uploadButton;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UIButton *shareThisButton;
 
 - (void)configureView;
 - (IBAction)uploadImage:(id)sender;
+- (IBAction)shareThisPressed:(id)sender;
+
 
 @end
 
@@ -60,6 +63,15 @@
     self.title = [self grabEventDate];
     self.imageView.image = [UIImage imageWithData:self.detailEvent.picture];
     self.titleLabel.text = self.detailEvent.title;
+    
+    // hide and disable Share This button when we have no picture
+    if (!self.detailEvent.picture) {
+        self.shareThisButton.hidden = YES;
+        self.shareThisButton.enabled = NO;
+    } else {
+        self.shareThisButton.hidden = NO;
+        self.shareThisButton.enabled = YES;
+    }
 }
 
 - (void)viewDidLoad
@@ -116,6 +128,15 @@
     
     [self presentModalViewController:imagePicker animated:YES];
     
+}
+
+- (IBAction)shareThisPressed:(id)sender {
+    
+    // bring up a UIActivityViewController
+    NSArray *items = @[self.detailEvent.title, [UIImage imageWithData:self.detailEvent.picture]];
+    UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+    
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
