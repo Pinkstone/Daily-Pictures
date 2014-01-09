@@ -61,7 +61,7 @@
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)displayStatistics {
@@ -79,7 +79,7 @@
     [components setMonth:12];
     NSDate *newYearsEve = [gregorian dateFromComponents:components];
     NSDateComponents *daysLeftComponents = [gregorian components:NSDayCalendarUnit fromDate:today toDate:newYearsEve options:0];
-    NSInteger daysLeft = [daysLeftComponents day];
+    NSInteger daysLeft = [daysLeftComponents day]+1;
     NSString *picturesLeft = [NSString stringWithFormat:@"%ld", (long)daysLeft];
     self.picturesLeftLabel.text = picturesLeft;
     

@@ -27,8 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    // self.navigationItem.leftBarButtonItem = self.editButtonItem;
+	[self registerDailyNotification];
 
     // add button
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
@@ -55,8 +54,19 @@
     // create a local notification
     UILocalNotification *notification = [[UILocalNotification alloc]init];
     
+    // create a first fire date at 10am
+    NSDate *fireDate = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:(NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay) fromDate:fireDate];
+    [components setHour:10];
+    [components setMinute:0];
+    [calendar setTimeZone:[NSTimeZone defaultTimeZone]];
+    fireDate = [calendar dateFromComponents:components];
+    
+    // NSLog(@"The Date is %@", [fireDate description]);
+    
     // customise and schedule it
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:30];
+    notification.fireDate = fireDate;
     notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.repeatInterval = NSDayCalendarUnit;
     notification.soundName = UILocalNotificationDefaultSoundName;
