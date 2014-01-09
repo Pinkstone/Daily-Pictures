@@ -59,6 +59,11 @@
     self.buildLabel.text = build;
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 - (void)displayStatistics {
     
     // number of pictures
@@ -101,8 +106,14 @@
         storeSizeLabel = [formatter stringFromByteCount:storeSize];
     } else {
         // format the results the old fashioned way
-        storeSize = storeSize / 1024 / 1024;
-        storeSizeLabel = [NSString stringWithFormat:@"%llu MB", storeSize];
+        float sizeMB = storeSize / 1024 / 1024;
+        if (sizeMB == 0) {
+            sizeMB = storeSize / 1024;
+            storeSizeLabel = [NSString stringWithFormat:@"%d KB", (int)sizeMB];
+        } else {
+            
+            storeSizeLabel = [NSString stringWithFormat:@"%d MB", (int)sizeMB];
+        }
     }
 
     self.iCloudSizeLabel.text = storeSizeLabel;

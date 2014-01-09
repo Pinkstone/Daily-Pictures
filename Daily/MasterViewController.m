@@ -100,7 +100,6 @@
 
 - (void)detailViewDelete:(Event *)event {
     
-    NSLog(@"Deleting event");
     [self.managedObjectContext deleteObject:event];
     [self.managedObjectContext save:nil];
 }
@@ -120,7 +119,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }

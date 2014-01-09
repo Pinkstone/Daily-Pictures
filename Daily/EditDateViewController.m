@@ -13,8 +13,8 @@
 @property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (strong, nonatomic) IBOutlet UITextField *textField;
 
-
 - (IBAction)changeDate:(id)sender;
+- (IBAction)dismissKeyboard:(id)sender;
 
 
 @end
@@ -34,7 +34,10 @@
 {
     [super viewDidLoad];
     self.datePicker.date = self.editEvent.timeStamp;
-    self.textField.text = self.editEvent.title;
+    if (self.editEvent.title) {
+        self.textField.text = self.editEvent.title;
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -52,6 +55,11 @@
 - (IBAction)changeDate:(id)sender {
     
     self.editEvent.timeStamp = self.datePicker.date;
+}
+
+- (IBAction)dismissKeyboard:(id)sender {
+    
+    [self.textField resignFirstResponder];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
