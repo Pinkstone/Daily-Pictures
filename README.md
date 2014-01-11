@@ -5,7 +5,7 @@ This little iOS app lets you save a picture every day and add a note to it.
 
 
 Usage
-=====
+-----
 
 To add a picture, click the plus icon. This will bring up a dialogue that lets you add a picture from your Camera Roll. Hit Edit to enter a title, or change the date on which the picture was taken.
 
