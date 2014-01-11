@@ -1,7 +1,9 @@
 Daily Pictures
 ==============
 
-This little iOS app lets you save a picture every day and add a note to it.
+This little iOS app lets you save a picture every day and add a note to it. Works on iOS 5, iOS 6 and iOS 7.
+
+[id]: Daily/Images.xcassets/AppIcon.appiconset/Icon-144.png
 
 
 Usage
