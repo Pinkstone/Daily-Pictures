@@ -3,7 +3,7 @@ Daily Pictures
 
 This little iOS app lets you save a picture every day and add a note to it. Works on iOS 5, iOS 6 and iOS 7.
 
-As a reminder you will receive a daily notification so you don't forget ;-)
+As a reminder you will receive a daily notification so you don't forget to add a picture ;-)
 
 
 Usage
