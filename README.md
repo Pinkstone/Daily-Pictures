@@ -1,4 +1,4 @@
-Daily-Pictures
+Daily Pictures
 ==============
 
 This little iOS app lets you save a picture every day and add a note to it.
