@@ -74,9 +74,8 @@
     }
     
     if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
-        // no picture sharing for iOS 5 users...
-        self.shareThisButton.hidden = YES;
-        self.shareThisButton.enabled = NO;
+        // iOS 5 users can only save to Camera Roll
+        [self.shareThisButton setTitle:@"Save to Camera Roll" forState:UIControlStateNormal];
     }
 }
 
@@ -138,11 +137,38 @@
 
 - (IBAction)shareThisPressed:(id)sender {
     
-    // bring up a UIActivityViewController
-    NSArray *items = @[[UIImage imageWithData:self.detailEvent.picture]];
-    UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_5_1) {
+        
+        // share to Camera Roll (iOS 5)
+        UIImage *image = [UIImage imageWithData:self.detailEvent.picture];
+        UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+        
+    } else {
+        
+        // bring up a UIActivityViewController (iOS 6 and higher)
+        NSArray *items = @[[UIImage imageWithData:self.detailEvent.picture]];
+        UIActivityViewController *controller = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+        
+        [self presentViewController:controller animated:YES completion:nil];
+        
+    }
+}
+
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
     
-    [self presentViewController:controller animated:YES completion:nil];
+    // called when the image was saved to the camera roll (iOS 5 only)
+    if (error.localizedDescription == NULL) {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil message:@"Your image was saved to the Camera Roll." delegate:self cancelButtonTitle:@"Thanks!" otherButtonTitles:nil, nil];
+        [alertView show];
+    
+    } else {
+        
+        // display error message
+        NSString *errorMessage = [NSString stringWithFormat:@"The image could not be saved today. %@.", error.localizedDescription];
+        UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Houston, we have a problem!" message:errorMessage delegate:self cancelButtonTitle:@"I'll try later" otherButtonTitles:nil, nil];
+        [errorView show];
+    }
+    
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
