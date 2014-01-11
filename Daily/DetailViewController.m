@@ -168,7 +168,6 @@
         UIAlertView *errorView = [[UIAlertView alloc]initWithTitle:@"Houston, we have a problem!" message:errorMessage delegate:self cancelButtonTitle:@"I'll try later" otherButtonTitles:nil, nil];
         [errorView show];
     }
-    
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
