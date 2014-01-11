@@ -17,7 +17,7 @@ Tap the Info button to see how many pictures you've already taken, how many more
 
 
 Notes
-=====
+-----
 
 I've written this app as a birthday present for my wife Julia. She wanted to track the daily weather changes and needed a simple mechanism to put those screenshots in one place. 
 
@@ -25,7 +25,7 @@ This App is currently not available on the App Store.
 
 
 Acknowledgements
-================
+----------------
 
 Thanks to Dirceu Vega for the wonderful Heart Icon from this Comic Icons collection. 
 See more of his wonderulf work at http://fasticon.com
