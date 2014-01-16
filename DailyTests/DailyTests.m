@@ -3,7 +3,7 @@
 //  DailyTests
 //
 //  Created by Jay Versluis on 06/01/2014.
-//  Copyright (c) 2014 Pinkstone Pictures LLC. All rights reserved.
+//  Copyright (c) 2014 Pinkstone Pictures LLC. All rights reserved. http://pinkstonepictures.com
 //
 
 /* 
