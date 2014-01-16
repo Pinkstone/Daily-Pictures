@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D241C8EF188846CC003DAB52 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D241C8EE188846CC003DAB52 /* License.rtf */; };
 		D2467969187B616C00853B63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2467968187B616C00853B63 /* Foundation.framework */; };
 		D246796B187B616C00853B63 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D246796A187B616C00853B63 /* CoreGraphics.framework */; };
 		D246796D187B616C00853B63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D246796C187B616C00853B63 /* UIKit.framework */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D241C8EE188846CC003DAB52 /* License.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = License.rtf; path = License/License.rtf; sourceTree = "<group>"; };
 		D2467965187B616C00853B63 /* Daily.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Daily.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2467968187B616C00853B63 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D246796A187B616C00853B63 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -152,6 +154,7 @@
 				D2467982187B616C00853B63 /* Daily.xcdatamodeld */,
 				D24679B8187B93E000853B63 /* Event.h */,
 				D24679B9187B93E000853B63 /* Event.m */,
+				D241C8EE188846CC003DAB52 /* License.rtf */,
 				D2467971187B616C00853B63 /* Supporting Files */,
 			);
 			path = Daily;
@@ -272,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2467981187B616C00853B63 /* Main_iPad.storyboard in Resources */,
+				D241C8EF188846CC003DAB52 /* License.rtf in Resources */,
 				D246798C187B616C00853B63 /* Images.xcassets in Resources */,
 				D246797E187B616C00853B63 /* Main_iPhone.storyboard in Resources */,
 				D2467975187B616C00853B63 /* InfoPlist.strings in Resources */,
